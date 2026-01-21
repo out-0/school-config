@@ -6,7 +6,7 @@
     	"type": "kitty-direct",
 		"width": 28,  // Adjust this to see how much space the image takes
     	"padding": {
-    		"top": 1,
+    		"top": 3,
                 "left": 1,
 		"preserveAspectRatio": true
     	}

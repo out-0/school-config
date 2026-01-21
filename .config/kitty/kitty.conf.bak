@@ -80,7 +80,7 @@ shell /usr/bin/zsh
 
 
 # BEGIN_KITTY_FONTS
-font_family      family="ProFont IIx Nerd Font Mono"
+font_family      family="BigBlueTerm437 Nerd Font Mono"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
@@ -97,7 +97,7 @@ spacing 0
 
 
 # BEGIN_KITTY_THEME
-# 3024 Night
+# Cyberpunk Neon
 include current-theme.conf
 # END_KITTY_THEME
 #

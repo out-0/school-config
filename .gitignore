@@ -9,4 +9,5 @@
 .config/gtk-*/
 .config/nautilus/
 .config/systemd/
+gnote
 **/*.bak
