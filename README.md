@@ -33,7 +33,7 @@ A high-performance Linux development environment tailored for school machines (i
 
 ## 🛠 Setup & Installation
 
-On a new machine, clone the repository and run the installer:
+`On a new machine, clone the repository and run the installer:`
 
 ```bash
 git clone git@github.com:out-0/school-config.git ~/school-config
@@ -61,7 +61,7 @@ Bash`
 
 ### 📤 When you leave (Backup)
 
-* Sync your changes back to the USB to take your work home: Bash
+`Sync your changes back to the USB to take your work home: Bash`
 
 ```bash
 ```
