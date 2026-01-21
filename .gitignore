@@ -1,0 +1,12 @@
+.config/pulse/
+.config/dconf/
+.config/evolution/
+.config/goa-1.0/
+.config/ibus/
+.config/docker/
+.config/gnome-session/
+.config/user-dirs.*
+.config/gtk-*/
+.config/nautilus/
+.config/systemd/
+**/*.bak

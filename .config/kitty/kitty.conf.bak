@@ -23,12 +23,16 @@
 
 # ── Window ─────────────────────────────
 hide_window_decorations yes
-remember_window_size    yes
-background_opacity      0.8
-background_blur         1
+#remember_window_size    yes
+background_opacity      0.9
+background_blur         30
 
 confirm_os_window_close 0
 window_padding_width 5
+# This sets the default size (columns, lines)
+remember_window_size  no
+initial_window_width  1000
+initial_window_height 600
 
 # ── Cursor ─────────────────────────────
 cursor_shape       block
@@ -72,15 +76,11 @@ map ctrl+shift+m move_window
 # Resize splits
 map ctrl+shift+r resize_window
 
-# Remove the padding.
-window_padding_width 0
-
 shell /usr/bin/zsh
 
 
 # BEGIN_KITTY_FONTS
-font_family      family="BigBlueTerm437 Nerd Font Mono"
-font_size		 16.0
+font_family      family="ProFont IIx Nerd Font Mono"
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
@@ -97,7 +97,7 @@ spacing 0
 
 
 # BEGIN_KITTY_THEME
-# Borland
+# 3024 Night
 include current-theme.conf
 # END_KITTY_THEME
 #
