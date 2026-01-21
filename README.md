@@ -41,8 +41,6 @@ cd ~/school-config
 chmod +x *.sh
 ./install.sh
 ```
-```
-```
 
 
 ## The Morning & Evening Routine
