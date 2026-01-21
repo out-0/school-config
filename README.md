@@ -54,21 +54,19 @@ chmod +x *.sh
 Bash`
 
 ```bash
-```
 ./restore_backup_from_usb.sh
 ```
-```
+
 
 ### 📤 When you leave (Backup)
 
 `Sync your changes back to the USB to take your work home: Bash`
 
 ```bash
-```
 ./take_backup_to_usb.sh
 sync
 ```
-```
+
 
 - Terminal: Kitty (Borderless & Ligatures)
 
