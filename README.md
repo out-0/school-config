@@ -50,8 +50,8 @@ chmod +x *.sh
 ### 📥 When you arrive (Restore)
 
 
-***Plug in your USB and pull your data onto the computer's fast SSD:
-Bash***
+`Plug in your USB and pull your data onto the computer's fast SSD:
+Bash`
 
 ```bash
 ```
@@ -61,8 +61,7 @@ Bash***
 
 ### 📤 When you leave (Backup)
 
-***Sync your changes back to the USB to take your work home:
-Bash***
+* Sync your changes back to the USB to take your work home: Bash
 
 ```bash
 ```
