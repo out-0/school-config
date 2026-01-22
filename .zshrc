@@ -123,3 +123,8 @@ function glass() {
     echo "Click on the window to set opacity to ${percent}%..."
     xprop -format _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY "$hex_val"
 }
+
+
+
+alias gitkittyoff='git update-index --assume-unchanged .config/kitty/kitty.conf'
+alias gitkittyon='git update-index --no-assume-unchanged .config/kitty/kitty.conf'
