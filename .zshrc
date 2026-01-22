@@ -86,6 +86,7 @@ if [[ -n "$KITTY_WINDOW_ID" ]]; then
     if [ -f "$THEME_FILE" ]; then
         # Pick one random line
         CHOSEN_THEME=$(shuf -n 1 "$THEME_FILE")
+		echo "$CHOSEN_THEME" > ~/.config/kitty/current_theme_name.txt
         # Apply it instantly to this window
 		# If you want each terminal Independent replace 'all' by 'none'
         kitten themes --reload-in=all "$CHOSEN_THEME"
@@ -109,23 +110,6 @@ fi
 #
 #OR == 
 #-----------------------------------------------------------------------------------------
-
-# Change window opacity by percentage
-# Usage: glass 70
-function glass() {
-    local percent=$1
-    if [[ -z "$percent" ]]; then
-        echo "Usage: glass [percentage]"
-        return 1
-    fi
-    # Calculate the hex value automatically
-    local hex_val=$(printf '0x%x' $((0xffffffff * percent / 100)))
-    echo "Click on the window to set opacity to ${percent}%..."
-    xprop -format _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY "$hex_val"
-}
-
-
-
 alias gitkittyoff='git update-index --assume-unchanged .config/kitty/kitty.conf'
 alias gitkittyon='git update-index --no-assume-unchanged .config/kitty/kitty.conf'
 
@@ -136,4 +120,33 @@ function sync() {
     git commit -m "Cyberpunk school Update: $(date +'%Y-%m-%d %H:%M')"
     git push origin main
     echo "🛸 System synced to the cloud."
+}
+
+# Change window opacity by percentage
+# Usage: glass 70
+function glass() {
+	local percent=$1
+	if [[ -z "$percent" ]]; then
+		echo "Usage: glass [percentage]"
+		return 1
+	fi
+	# Calculate the hex value automatically
+	local hex_val=$(printf '0x%x' $((0xffffffff * percent / 100)))
+	echo "Click on the window to set opacity to ${percent}%..."
+	xprop -format _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY "$hex_val"
+
+}
+
+# Make the browser transparent each time u open terminal or touch ur prompt.
+precmd() {
+    # We wrap the whole thing in () to run it in a subshell
+    # Then we use &! to background it without job notifications
+    (
+        local ids=$(xwininfo -root -tree | grep -i "librewolf" | grep -o "0x[0-9a-f]\+")
+        if [[ -n "$ids" ]]; then
+            echo "$ids" | while read -r id; do
+                xprop -id "$id" -format _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY 0xB3333333 2>/dev/null
+            done
+        fi
+    ) &!
 }
