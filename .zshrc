@@ -128,3 +128,12 @@ function glass() {
 
 alias gitkittyoff='git update-index --assume-unchanged .config/kitty/kitty.conf'
 alias gitkittyon='git update-index --no-assume-unchanged .config/kitty/kitty.conf'
+
+# One-command sync to GitHub
+function sync() {
+    git add .
+    # This commits with the current date and time
+    git commit -m "Cyberpunk school Update: $(date +'%Y-%m-%d %H:%M')"
+    git push origin main
+    echo "🛸 System synced to the cloud."
+}
