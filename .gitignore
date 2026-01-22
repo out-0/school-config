@@ -13,3 +13,9 @@ gnote
 **/*.bak
 .config/kitty/current-theme.conf
 .config/kitty/kitty.conf.bak
+
+.config/autostart/
+.config/enchant/
+.config/gedit/
+.config/kitty/current_theme_name.txt
+.config/libreoffice/
