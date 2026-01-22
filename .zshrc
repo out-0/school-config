@@ -1,6 +1,8 @@
 # PATS EXPORTATION
 export PATH="$HOME/.local/bin:$PATH"
 
+export PATH="$HOME/school-config/bin:$PATH"
+
 # Run init_goinfre ONLY if it hasn't run since we logged in
 if [ ! -f "/tmp/goinfre_ready_$USER" ]; then
     if [ -f "$HOME/init_goinfre.sh" ]; then
@@ -49,6 +51,7 @@ alias v='nvim'
 alias gac='git add . && git commit -m'
 alias gs='git status'
 alias cls='clear'
+alias py='clear; python3'
 
 # ---------------------------
 # Shell integrations
@@ -88,3 +91,35 @@ if [[ -n "$KITTY_WINDOW_ID" ]]; then
         kitten themes --reload-in=all "$CHOSEN_THEME"
     fi
 fi
+
+
+#----------------------------------------------------------------------------------------
+#Open your terminal and type: 
+#
+#  'xprop -format _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY 0x7FFFFFFF'
+#
+#
+#Your cursor will turn into a crosshair.
+#
+#Click on your LibreWolf browser.
+#
+#If it turns 50% transparent: Success! You just found the holy grail for school machines.
+#
+#If nothing happens: Your machine is using Wayland, and we need to use a different trick.
+#
+#OR == 
+#-----------------------------------------------------------------------------------------
+
+# Change window opacity by percentage
+# Usage: glass 70
+function glass() {
+    local percent=$1
+    if [[ -z "$percent" ]]; then
+        echo "Usage: glass [percentage]"
+        return 1
+    fi
+    # Calculate the hex value automatically
+    local hex_val=$(printf '0x%x' $((0xffffffff * percent / 100)))
+    echo "Click on the window to set opacity to ${percent}%..."
+    xprop -format _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY "$hex_val"
+}
