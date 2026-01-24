@@ -38,10 +38,13 @@ if [ -f "$THEME_FILE" ]; then
         "Tropical Neon")
             WALLPAPER="Tropical_Neon.jpg"
             ;;
+        "Jackie Brown")
+            WALLPAPER="Jackie_Brown.jpeg"
+            ;;
 
         *)
             # Default wallpaper if theme isn't specifically mapped
-            WALLPAPER="default_cyber.png"
+            WALLPAPER="c2.jpeg"
             ;;
     esac
 
