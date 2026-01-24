@@ -19,3 +19,5 @@ gnote
 .config/gedit/
 .config/kitty/current_theme_name.txt
 .config/libreoffice/
+.config/eog/
+.config/yelp/
