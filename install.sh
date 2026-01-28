@@ -19,13 +19,13 @@ if [ ! -f "$HOME/.local/bin/fastfetch" ]; then
     rm -rf /tmp/fastfetch.tar.gz /tmp/ff_temp
 fi
 
-# 3. DOTFILES SYNC
+#  DOTFILES SYNC
 echo "Linking config files..."
 rm -f ~/.zshrc ~/init_goinfre.sh # Remove old files/links first
 ln -sf ~/school-config/.zshrc ~/.zshrc
 ln -sf ~/school-config/init_goinfre.sh ~/init_goinfre.sh
 
-# 4. GNOME EXTENSIONS
+#  GNOME EXTENSIONS
 echo "Configuring GNOME Shell..."
 mkdir -p "$HOME/.local/share/gnome-shell/extensions"
 # Only copy if extensions aren't already there

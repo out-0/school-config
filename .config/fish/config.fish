@@ -4,3 +4,4 @@ end
 
 # Created by `pipx` on 2026-01-05 01:54:27
 set PATH $PATH /home/out/.local/bin
+alias py='python3'

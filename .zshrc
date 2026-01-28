@@ -51,7 +51,7 @@ alias v='nvim'
 alias gac='git add . && git commit -m'
 alias gs='git status'
 alias cls='clear'
-alias py='clear; python3'
+alias py='clear; echo "----------------------------------------------------------------------------------"; python3'
 
 # ---------------------------
 # Shell integrations
@@ -59,19 +59,19 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(starship init zsh)"
 
-# >>> conda initialize >>>
-# This is the ONLY block you need for Conda
-__conda_setup="$('/goinfre/aarid/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/goinfre/aarid/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/goinfre/aarid/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/goinfre/aarid/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+## >>> conda initialize >>>
+## This is the ONLY block you need for Conda
+#__conda_setup="$('/goinfre/aarid/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+#if [ $? -eq 0 ]; then
+#    eval "$__conda_setup"
+#else
+#    if [ -f "/goinfre/aarid/miniconda3/etc/profile.d/conda.sh" ]; then
+#        . "/goinfre/aarid/miniconda3/etc/profile.d/conda.sh"
+#    else
+#        export PATH="/goinfre/aarid/miniconda3/bin:$PATH"
+#    fi
+#fi
+#unset __conda_setup
 # <<< conda initialize <<<
 
 # Start Fastfetch automatically
@@ -130,7 +130,8 @@ precmd() {
         local ids=$(xwininfo -root -tree | grep -i "librewolf" | grep -o "0x[0-9a-f]\+")
         if [[ -n "$ids" ]]; then
             echo "$ids" | while read -r id; do
-                xprop -id "$id" -format _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY 0xB3333333 2>/dev/null
+                xprop -id "$id" -format _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY 0xF0000000 2>/dev/null
+                #xprop -id "$id" -format _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY 0xFFFFFFFF 2>/dev/null
             done
         fi
     ) &!

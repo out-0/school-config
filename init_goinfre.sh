@@ -29,6 +29,23 @@ if [ ! -d "$GOINFRE/miniconda3" ]; then
 fi
 ln -sfn "$GOINFRE/miniconda3" "$HOME/miniconda3"
 
+# --- 4. DISCORD (WebCord AppImage) ---
+# Updated to v4.12.1 with robust curl flags
+if [ ! -f "$MY_APPS/discord.AppImage" ] || [ $(stat -c%s "$MY_APPS/discord.AppImage") -lt 1000 ]; then
+    echo "💬 Installing Discord (WebCord)..."
+    rm -f "$MY_APPS/discord.AppImage" # Remove if it's a tiny "Not Found" file
+    curl -Lf "https://github.com/SpacingBat3/WebCord/releases/download/v4.12.1/WebCord-4.12.1-x64.AppImage" -o "$MY_APPS/discord.AppImage"
+    chmod +x "$MY_APPS/discord.AppImage"
+fi
+# Shortcut and Config parts stay the same
+echo -e "#!/bin/bash\nnohup $MY_APPS/discord.AppImage --no-sandbox > /dev/null 2>&1 &" > "$LOCAL_BIN/discord"
+chmod +x "$LOCAL_BIN/discord"
+# Link Config
+mkdir -p "$HOME/.config"
+mkdir -p "$GOINFRE/discord_config"
+ln -sfn "$GOINFRE/discord_config" "$HOME/.config/WebCord"
+
+
 # --- 4. THE PORTALS (Heavy Data to Goinfre) ---
 echo "🔗 Opening Portals..."
 mkdir -p "$HOME/.local/share" "$HOME/.local/state" "$HOME/.vscode"
@@ -44,6 +61,9 @@ ln -sfn "$GOINFRE/vscode_data" "$HOME/.vscode/extensions"
 # (Assuming you ran the install.sh once to put them in .local/bin)
 # This part makes sure your .local/bin is always in your PATH
 export PATH="$LOCAL_BIN:$PATH"
+
+
+
 
 # --- 6. HOUSEKEEPING ---
 rm -rf "$HOME/.local/lib/python3.10/site-packages/pydantic" 2>/dev/null
