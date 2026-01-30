@@ -1,6 +1,9 @@
 -- Options are automatically loaded before lazy.nvim startup
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
+-- Add this to the top of your init.lua or options.lua
+vim.env.PATH = vim.fn.expand("$GOINFRE") .. "/apps/npm-global/bin:" .. vim.env.PATH
+
 
 vim.opt.termguicolors = true
 vim.opt.signcolumn = "auto"
@@ -43,7 +46,7 @@ vim.g.lazyvim_picker = "snacks"
 -- Can be one of: nvim-cmp, blink.cmp
 -- Leave it to "auto" to automatically use the completion engine
 -- enabled with `:LazyExtras`
-vim.g.lazyvim_cmp = "auto"
+vim.g.lazyvim_cmp = "nvim-cmp"
 
 -- if the completion engine supports the AI source,
 -- use that instead of inline suggestions
@@ -104,7 +107,7 @@ opt.grepprg = "rg --vimgrep"
 opt.ignorecase = true -- Ignore case
 opt.inccommand = "nosplit" -- preview incremental substitute
 opt.jumpoptions = "view"
-opt.laststatus = 0 -- global statusline
+opt.laststatus = 1 -- global statusline
 opt.cmdheight = 0
 opt.showcmd = true
 opt.linebreak = true -- Wrap lines at convenient points
