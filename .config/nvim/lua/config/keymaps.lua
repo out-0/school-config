@@ -70,3 +70,18 @@ map("n", "<leader>hd", function() mark.rm_file() end, { desc = "Harpoon Remove" 
 -- Also highly recommended: map Escape to exit terminal typing mode
 -- This lets you use normal 'j/k' to scroll the Gemini output
 --vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Terminal: Exit Insert Mode" })
+
+
+
+-- ruff formatter
+vim.keymap.set("n", "<leader>cf", function()
+  vim.lsp.buf.format({ name = "ruff" }) -- Replace "ruff" with "black" if you prefer black
+  print("🧹 Code cleaned via Ruff")
+end, { desc = "Formate Py with Ruff" })
+
+vim.keymap.del("n", "<leader>cF")
+vim.keymap.del("n", "<leader>cd")
+vim.keymap.del("n", "<leader>cs")
+vim.keymap.del("n", "<leader>cS")
+vim.keymap.del("n", "<leader>cc")
+vim.keymap.del("n", "<leader>cC")

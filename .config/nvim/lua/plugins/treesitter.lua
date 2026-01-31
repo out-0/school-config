@@ -1,24 +1,14 @@
 return {
   "nvim-treesitter/nvim-treesitter",
   opts = function(_, opts)
-    -- Add your languages to the existing list
+    -- 42 Hack: Python needs a C++ compiler for its 'scanner.cc'
+    -- We force clang/clang++ because 'cc' is often broken at school
+    local install = require("nvim-treesitter.install")
+    install.compilers = { "clang", "gcc" }
+    
+    -- Add python to the list
     if type(opts.ensure_installed) == "table" then
-      vim.list_extend(opts.ensure_installed, {
-        "bash",
-        "html",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "query",
-        "regex",
-        "tsx",
-        "typescript",
-        "vim",
-        "yaml",
-      })
+      vim.list_extend(opts.ensure_installed, { "python", "lua", "c" })
     end
   end,
 }

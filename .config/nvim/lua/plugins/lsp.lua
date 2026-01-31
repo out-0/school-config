@@ -8,10 +8,13 @@ return {
         "clangd",    -- C/C++
         "lua-language-server",
         "bash-language-server",
-        "python-lsp-server",
-        "flakeheaven",
-        "pyright",
-        "ruff",
+        --"python-lsp-server",
+        --"flakeheaven",
+        --"pyright",
+        --"ruff",
+        "harper-ls",
+        --"django-template-lsp",
+        --"pyflakes"
         --"pyment"
       },
     },
