@@ -45,6 +45,36 @@ mkdir -p "$HOME/.config"
 mkdir -p "$GOINFRE/discord_config"
 ln -sfn "$GOINFRE/discord_config" "$HOME/.config/WebCord"
 
+# --- 5. PYCHARM (Community Edition) ---
+if [ ! -f "$MY_APPS/pycharm/bin/pycharm.sh" ]; then
+    echo "💎 Installing PyCharm..."
+    mkdir -p "$MY_APPS/pycharm"
+	curl -Lf "https://download.jetbrains.com/python/pycharm-community-2023.3.3.tar.gz" --output "$GOINFRE/pycharm.tar.gz"
+    tar -xzf "$GOINFRE/pycharm.tar.gz" -C "$MY_APPS/pycharm" --strip-components=1
+    rm "$GOINFRE/pycharm.tar.gz"
+fi
+echo -e "#!/bin/bash\nnohup $MY_APPS/pycharm/bin/pycharm.sh > /dev/null 2>&1 &" > "$LOCAL_BIN/pycharm"
+chmod +x "$LOCAL_BIN/pycharm"
+mkdir -p "$GOINFRE/pycharm_data"
+ln -sfn "$GOINFRE/pycharm_data" "$HOME/.config/JetBrains"
+
+# --- 5. NODE & NPM INSTALLER ---
+if ! command -v node &> /dev/null; then
+    echo "📦 Node.js not found. Installing via Conda..."
+    # We include python=3.11 to ensure the environment stays on the version you want
+    conda install -c conda-forge nodejs=20 python=3.11 -y
+else
+    echo "✅ Node.js is already installed. Skipping..."
+fi
+
+# Always ensure the npm prefix is set correctly to Goinfre
+if command -v npm &> /dev/null; then
+    mkdir -p "$MY_APPS/npm-global"
+    npm config set prefix "$MY_APPS/npm-global"
+    
+    # Ensure this is in your PATH (Add this to your .zshrc if not already there)
+    # export PATH="$MY_APPS/npm-global/bin:$PATH"
+fi
 
 # --- 4. THE PORTALS (Heavy Data to Goinfre) ---
 echo "🔗 Opening Portals..."
@@ -61,9 +91,6 @@ ln -sfn "$GOINFRE/vscode_data" "$HOME/.vscode/extensions"
 # (Assuming you ran the install.sh once to put them in .local/bin)
 # This part makes sure your .local/bin is always in your PATH
 export PATH="$LOCAL_BIN:$PATH"
-
-
-
 
 # --- 6. HOUSEKEEPING ---
 rm -rf "$HOME/.local/lib/python3.10/site-packages/pydantic" 2>/dev/null
