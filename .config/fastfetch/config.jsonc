@@ -4,9 +4,9 @@
     	"source": "~/.config/fastfetch/img2_resized.png",
     	//"source": "~/.config/fastfetch/image.png.png",
     	"type": "kitty-direct",
-		"width": 28,  // Adjust this to see how much space the image takes
+		"width": 24,  // Adjust this to see how much space the image takes
     	"padding": {
-    		"top": 4,
+    		"top": 3,
                 "left": 1,
 		"preserveAspectRatio": true
     	}
