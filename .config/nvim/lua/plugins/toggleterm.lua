@@ -3,11 +3,11 @@ return {
   version = "*",
   -- 1. Define the key to open/toggle the terminal
   keys = {
-    { "<leader>t", "<cmd>ToggleTerm direction=horizontal<cr>", desc = "Terminal Bottom" },
+    { "<leader>t", "<cmd>ToggleTerm direction=vertical<cr>", desc = "Terminal Bottom" },
   },
   opts = {
-    size = 20,
-    direction = "horizontal",
+    size = 80,
+    direction = "vertical",
     shade_terminals = true,
     start_in_insert = true,
     persist_size = true,

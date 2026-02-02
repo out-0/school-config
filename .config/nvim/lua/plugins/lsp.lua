@@ -8,8 +8,8 @@ return {
         "clangd",    -- C/C++
         "lua-language-server",
         "bash-language-server",
-        --"python-lsp-server",
-        --"flakeheaven",
+        "python-lsp-server",
+        "flakeheaven",
         --"pyright",
         --"ruff",
         "harper-ls",

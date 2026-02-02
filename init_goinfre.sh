@@ -76,6 +76,26 @@ if command -v npm &> /dev/null; then
     # export PATH="$MY_APPS/npm-global/bin:$PATH"
 fi
 
+# --- 5. NODE & NPM INSTALLER (Continued) ---
+if command -v npm &> /dev/null; then
+    echo "🛠️  Checking global CLI tools..."
+    
+    # Check and install Gemini CLI
+    if [ ! -f "$MY_APPS/npm-global/bin/gemini" ]; then
+        echo "♊ Installing Gemini CLI..."
+        npm install -g @google/gemini-cli
+    fi
+
+    # Check and install OpenCode AI
+    if [ ! -f "$MY_APPS/npm-global/bin/opencode" ]; then
+        echo "💻 Installing OpenCode AI..."
+        npm install -g opencode-ai
+    fi
+else
+    echo "⚠️  npm not found. Skipping CLI tools installation."
+fi
+
+
 # --- 4. THE PORTALS (Heavy Data to Goinfre) ---
 echo "🔗 Opening Portals..."
 mkdir -p "$HOME/.local/share" "$HOME/.local/state" "$HOME/.vscode"

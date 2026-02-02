@@ -2,6 +2,7 @@
 export PATH="$HOME/.local/bin:$PATH"
 
 export PATH="$HOME/school-config/bin:$PATH"
+export PATH="/goinfre/$USER/apps/npm-global/bin:$PATH"
 
 # Run init_goinfre ONLY if it hasn't run since we logged in
 if [ ! -f "/tmp/goinfre_ready_$USER" ]; then
@@ -52,26 +53,35 @@ alias gac='git add . && git commit -m'
 alias gs='git status'
 alias cls='clear'
 alias py='clear; echo "----------------------------------------------------------------------------------"; python3'
+# Faster Gemini Chat
+alias gc="gemini -i 'Hello!'"
 
+# Quick Code Explainer (just copy code then run 'ge')
+alias ge="pbpaste | gemini -i 'Explain this code:'"
+
+
+alias cc='gcc'
+alias ai='opencode'
+alias aii='nollama'
 # ---------------------------
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(starship init zsh)"
 
-## >>> conda initialize >>>
-## This is the ONLY block you need for Conda
-#__conda_setup="$('/goinfre/aarid/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-#if [ $? -eq 0 ]; then
-#    eval "$__conda_setup"
-#else
-#    if [ -f "/goinfre/aarid/miniconda3/etc/profile.d/conda.sh" ]; then
-#        . "/goinfre/aarid/miniconda3/etc/profile.d/conda.sh"
-#    else
-#        export PATH="/goinfre/aarid/miniconda3/bin:$PATH"
-#    fi
-#fi
-#unset __conda_setup
+# >>> conda initialize >>>
+# This is the ONLY block you need for Conda
+__conda_setup="$('/goinfre/aarid/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/goinfre/aarid/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/goinfre/aarid/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/goinfre/aarid/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
 # <<< conda initialize <<<
 
 # Start Fastfetch automatically
@@ -140,4 +150,4 @@ precmd() {
 xrdb -merge ~/school-config/.Xresources
 
 # change kitty each time open new session
-~/./school-config/change_kitty_themes.sh
+#~/./school-config/change_kitty_themes.sh
