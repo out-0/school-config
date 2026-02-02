@@ -18,10 +18,10 @@ if status_ok then
     map("n", "<leader>h", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon: Menu" })
     
     -- Quick Select (Leader + 1, 2, 3, 4)
-    map("n", "<leader>1", function() harpoon:list():select(1) end, { desc = "Harpoon: File 1" })
-    map("n", "<leader>2", function() harpoon:list():select(2) end, { desc = "Harpoon: File 2" })
-    map("n", "<leader>3", function() harpoon:list():select(3) end, { desc = "Harpoon: File 3" })
-    map("n", "<leader>4", function() harpoon:list():select(4) end, { desc = "Harpoon: File 4" })
+    --map("n", "<leader>1", function() harpoon:list():select(1) end, { desc = "Harpoon: File 1" })
+    --map("n", "<leader>2", function() harpoon:list():select(2) end, { desc = "Harpoon: File 2" })
+    --map("n", "<leader>3", function() harpoon:list():select(3) end, { desc = "Harpoon: File 3" })
+    --map("n", "<leader>4", function() harpoon:list():select(4) end, { desc = "Harpoon: File 4" })
 end
 
 -- 4. Python/Ruff Format
@@ -29,3 +29,33 @@ map("n", "<leader>cf", function()
   vim.lsp.buf.format({ name = "ruff" })
   print("🧹 Code cleaned via Ruff")
 end, { desc = "Format Py with Ruff" })
+
+-- Delete keys:
+pcall(vim.keymap.del, "n", "<leader>1")
+pcall(vim.keymap.del, "n", "<leader>2")
+pcall(vim.keymap.del, "n", "<leader>3")
+pcall(vim.keymap.del, "n", "<leader>4")
+pcall(vim.keymap.del, "n", "<leader>5")
+pcall(vim.keymap.del, "n", "<leader>6")
+pcall(vim.keymap.del, "n", "<leader>7")
+pcall(vim.keymap.del, "n", "<leader>8")
+pcall(vim.keymap.del, "n", "<leader>9")
+pcall(vim.keymap.del, "n", "<leader>H")
+
+pcall(vim.keymap.del, "n", "<leader>cF")
+pcall(vim.keymap.del, "n", "<leader>cd")
+pcall(vim.keymap.del, "n", "<leader>cs")
+pcall(vim.keymap.del, "n", "<leader>cS")
+
+pcall(vim.keymap.del, "n", "<leader>E")
+pcall(vim.keymap.del, "n", "<leader>K")
+pcall(vim.keymap.del, "n", "<leader>S")
+pcall(vim.keymap.del, "n", "<leader>,")
+pcall(vim.keymap.del, "n", "<leader>.")
+pcall(vim.keymap.del, "n", "<leader>/")
+pcall(vim.keymap.del, "n", "<leader>`")
+pcall(vim.keymap.del, "n", "<leader>-")
+pcall(vim.keymap.del, "n", "<leader>y")
+pcall(vim.keymap.del, "n", "<leader>Y")
+pcall(vim.keymap.del, "n", "<leader>Y")
+
