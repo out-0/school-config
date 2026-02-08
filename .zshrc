@@ -1,8 +1,13 @@
 # PATS EXPORTATION
-export PATH="$HOME/.local/bin:$PATH"
+# Goinfre Rust Paths
 
 export PATH="$HOME/school-config/bin:$PATH"
 export PATH="/goinfre/$USER/apps/npm-global/bin:$PATH"
+
+export RUSTUP_HOME="/goinfre/$USER/rustup"
+export CARGO_HOME="/goinfre/$USER/cargo"
+export PATH="$CARGO_HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Run init_goinfre ONLY if it hasn't run since we logged in
 if [ ! -f "/tmp/goinfre_ready_$USER" ]; then
@@ -55,6 +60,7 @@ alias cls='clear'
 alias py='clear; echo "----------------------------------------------------------------------------------"; python3'
 # Faster Gemini Chat
 alias gc="gemini -i 'Hello!'"
+
 
 # Quick Code Explainer (just copy code then run 'ge')
 alias ge="pbpaste | gemini -i 'Explain this code:'"
@@ -151,3 +157,4 @@ xrdb -merge ~/school-config/.Xresources
 
 # change kitty each time open new session
 #~/./school-config/change_kitty_themes.sh
+

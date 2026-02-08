@@ -112,6 +112,41 @@ ln -sfn "$GOINFRE/vscode_data" "$HOME/.vscode/extensions"
 # This part makes sure your .local/bin is always in your PATH
 export PATH="$LOCAL_BIN:$PATH"
 
+# --- 7. RUST (Inside Goinfre) ---
+export RUSTUP_HOME="$GOINFRE/rustup"
+export CARGO_HOME="$GOINFRE/cargo"
+
+if [ ! -d "$CARGO_HOME/bin" ]; then
+    echo "🦀 Installing Rust to Goinfre..."
+    # Install with minimal profile to save even MORE space
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
+        --no-modify-path \
+        --profile minimal \
+        -y
+fi
+
+# Add Cargo to current session PATH
+export PATH="$CARGO_HOME/bin:$PATH"
+
+# --- 8. ALACRITTY (Build from Source) ---
+if [ ! -f "$LOCAL_BIN/alacritty" ]; then
+    echo "🖥️ Building Alacritty..."
+    # Clone into goinfre to keep your home clean
+    git clone https://github.com/alacritty/alacritty.git "$GOINFRE/alacritty_src"
+    cd "$GOINFRE/alacritty_src"
+    
+    # Build it
+    cargo build --release
+    
+    # Move binary to your local bin and cleanup source to save GBs
+    cp target/release/alacritty "$LOCAL_BIN/alacritty"
+    cd ~
+    rm -rf "$GOINFRE/alacritty_src"
+    echo "✅ Alacritty installed to $LOCAL_BIN"
+fi
+ln -sfn "$HOME/school-config/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+
+
 # --- 6. HOUSEKEEPING ---
 rm -rf "$HOME/.local/lib/python3.10/site-packages/pydantic" 2>/dev/null
 hash -r

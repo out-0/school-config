@@ -1,0 +1,25 @@
+[window]
+padding = { x = 10, y = 10 }
+dynamic_title = true
+opacity = 0.95 # This gives you that "Glass" look natively
+blur = true    # Only works on some desktop environments
+decorations = "None"
+
+[font]
+normal = { family = "JetBrains Mono", style = "Regular" }
+bold = { family = "JetBrains Mono", style = "Bold" }
+size = 18.0
+
+[colors.primary]
+background = '#0d0d0d' # Deep Cyberpunk Black
+foreground = '#b2b2b2'
+
+[colors.normal]
+black =   '#000000'
+red =     '#ff5555'
+green =   '#50fa7b'
+yellow =  '#f1fa8c'
+blue =    '#bd93f9'
+magenta = '#ff79c6'
+cyan =    '#8be9fd'
+white =   '#bfbfbf'
