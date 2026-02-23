@@ -10,7 +10,7 @@ mkdir -p "$GOINFRE" "$MY_APPS" "$LOCAL_BIN" "$GOINFRE/vscode_data" "$GOINFRE/con
 
 echo "🚀 Running Ultimate Goinfre Setup..."
 
-# --- 2. VS CODE (Standalone in Goinfre) ---
+# --- 2. VS CODE ---
 if [ ! -f "$MY_APPS/vscode/bin/code" ]; then
     echo "📦 Installing VS Code..."
     mkdir -p "$MY_APPS/vscode"
@@ -20,135 +20,124 @@ if [ ! -f "$MY_APPS/vscode/bin/code" ]; then
 fi
 ln -sf "$MY_APPS/vscode/bin/code" "$LOCAL_BIN/code"
 
-# --- 3. CONDA (For Python Only) ---
+# --- 3. CONDA ---
 if [ ! -d "$GOINFRE/miniconda3" ]; then
     echo "🐍 Installing Conda..."
     curl -L https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o /tmp/miniconda.sh
     bash /tmp/miniconda.sh -b -u -p "$GOINFRE/miniconda3"
     rm /tmp/miniconda.sh
 fi
+# Ensure Conda is in the current session PATH immediately
+export PATH="$GOINFRE/miniconda3/bin:$PATH"
 ln -sfn "$GOINFRE/miniconda3" "$HOME/miniconda3"
 
-# --- 4. DISCORD (WebCord AppImage) ---
-# Updated to v4.12.1 with robust curl flags
+# --- 4. DISCORD (WebCord) ---
 if [ ! -f "$MY_APPS/discord.AppImage" ] || [ $(stat -c%s "$MY_APPS/discord.AppImage") -lt 1000 ]; then
     echo "💬 Installing Discord (WebCord)..."
-    rm -f "$MY_APPS/discord.AppImage" # Remove if it's a tiny "Not Found" file
+    rm -f "$MY_APPS/discord.AppImage"
     curl -Lf "https://github.com/SpacingBat3/WebCord/releases/download/v4.12.1/WebCord-4.12.1-x64.AppImage" -o "$MY_APPS/discord.AppImage"
     chmod +x "$MY_APPS/discord.AppImage"
 fi
-# Shortcut and Config parts stay the same
+
+# FIXED: Added the closing quote below
 echo -e "#!/bin/bash\nnohup $MY_APPS/discord.AppImage --no-sandbox > /dev/null 2>&1 &" > "$LOCAL_BIN/discord"
 chmod +x "$LOCAL_BIN/discord"
-# Link Config
-mkdir -p "$HOME/.config"
-mkdir -p "$GOINFRE/discord_config"
-ln -sfn "$GOINFRE/discord_config" "$HOME/.config/WebCord"
 
-# --- 5. PYCHARM (Community Edition) ---
-if [ ! -f "$MY_APPS/pycharm/bin/pycharm.sh" ]; then
-    echo "💎 Installing PyCharm..."
-    mkdir -p "$MY_APPS/pycharm"
-	curl -Lf "https://download.jetbrains.com/python/pycharm-community-2023.3.3.tar.gz" --output "$GOINFRE/pycharm.tar.gz"
-    tar -xzf "$GOINFRE/pycharm.tar.gz" -C "$MY_APPS/pycharm" --strip-components=1
-    rm "$GOINFRE/pycharm.tar.gz"
-fi
-echo -e "#!/bin/bash\nnohup $MY_APPS/pycharm/bin/pycharm.sh > /dev/null 2>&1 &" > "$LOCAL_BIN/pycharm"
-chmod +x "$LOCAL_BIN/pycharm"
-mkdir -p "$GOINFRE/pycharm_data"
-ln -sfn "$GOINFRE/pycharm_data" "$HOME/.config/JetBrains"
-
-# --- 5. NODE & NPM INSTALLER ---
-if ! command -v node &> /dev/null; then
-    echo "📦 Node.js not found. Installing via Conda..."
-    # We include python=3.11 to ensure the environment stays on the version you want
+# --- 5. NODE & NPM (Modern v20) ---
+# We force Node 20 because Gemini-CLI and OpenCode require modern ESM support
+if ! command -v node &> /dev/null || [[ $(node -v) == v12* ]]; then
+    echo "📦 Node.js missing or too old. Installing v20 via Conda..."
+	conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+	conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
     conda install -c conda-forge nodejs=20 python=3.11 -y
-else
-    echo "✅ Node.js is already installed. Skipping..."
 fi
 
-# Always ensure the npm prefix is set correctly to Goinfre
+# Fix node-gyp Python conflict
 if command -v npm &> /dev/null; then
+    npm config set python "$GOINFRE/miniconda3/bin/python"
     mkdir -p "$MY_APPS/npm-global"
     npm config set prefix "$MY_APPS/npm-global"
-    
-    # Ensure this is in your PATH (Add this to your .zshrc if not already there)
-    # export PATH="$MY_APPS/npm-global/bin:$PATH"
+    export PATH="$MY_APPS/npm-global/bin:$PATH"
 fi
 
-# --- 5. NODE & NPM INSTALLER (Continued) ---
+# --- 6. CLI TOOLS ---
 if command -v npm &> /dev/null; then
-    echo "🛠️  Checking global CLI tools..."
+    echo "🛠️ Checking global CLI tools..."
     
-    # Check and install Gemini CLI
+    # Gemini CLI
     if [ ! -f "$MY_APPS/npm-global/bin/gemini" ]; then
         echo "♊ Installing Gemini CLI..."
         npm install -g @google/gemini-cli
     fi
 
-    # Check and install OpenCode AI
+    # OpenCode AI
     if [ ! -f "$MY_APPS/npm-global/bin/opencode" ]; then
         echo "💻 Installing OpenCode AI..."
         npm install -g opencode-ai
     fi
+
+    if [ ! -f "$MY_APPS/npm-global/bin/codex" ]; then
+        echo "💻 Installing Codex AI..."
+		npm i -g @openai/codex
+    fi
 else
-    echo "⚠️  npm not found. Skipping CLI tools installation."
+    echo "⚠️ npm not found. Skipping CLI tools."
 fi
 
-
-# --- 4. THE PORTALS (Heavy Data to Goinfre) ---
-echo "🔗 Opening Portals..."
-mkdir -p "$HOME/.local/share" "$HOME/.local/state" "$HOME/.vscode"
-
-# Link Neovim Data/State
-ln -sfn "$GOINFRE/nvim_data" "$HOME/.local/share/nvim"
-ln -sfn "$GOINFRE/nvim_state" "$HOME/.local/state/nvim"
-
-# Link VS Code Extensions
-ln -sfn "$GOINFRE/vscode_data" "$HOME/.vscode/extensions"
-
-# --- 5. STANDALONE KITTY & FASTFETCH ---
-# (Assuming you ran the install.sh once to put them in .local/bin)
-# This part makes sure your .local/bin is always in your PATH
-export PATH="$LOCAL_BIN:$PATH"
-
-# --- 7. RUST (Inside Goinfre) ---
+# --- 7. RUST & ALACRITTY ---
 export RUSTUP_HOME="$GOINFRE/rustup"
 export CARGO_HOME="$GOINFRE/cargo"
 
 if [ ! -d "$CARGO_HOME/bin" ]; then
-    echo "🦀 Installing Rust to Goinfre..."
-    # Install with minimal profile to save even MORE space
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- \
-        --no-modify-path \
-        --profile minimal \
-        -y
+    echo "🦀 Installing Rust..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path --profile minimal -y
 fi
-
-# Add Cargo to current session PATH
 export PATH="$CARGO_HOME/bin:$PATH"
 
-# --- 8. ALACRITTY (Build from Source) ---
 if [ ! -f "$LOCAL_BIN/alacritty" ]; then
     echo "🖥️ Building Alacritty..."
-    # Clone into goinfre to keep your home clean
     git clone https://github.com/alacritty/alacritty.git "$GOINFRE/alacritty_src"
     cd "$GOINFRE/alacritty_src"
-    
-    # Build it
     cargo build --release
-    
-    # Move binary to your local bin and cleanup source to save GBs
     cp target/release/alacritty "$LOCAL_BIN/alacritty"
-    cd ~
-    rm -rf "$GOINFRE/alacritty_src"
-    echo "✅ Alacritty installed to $LOCAL_BIN"
+    cd ~ && rm -rf "$GOINFRE/alacritty_src"
 fi
-ln -sfn "$HOME/school-config/alacritty.toml" "$HOME/.config/alacritty/alacritty.toml"
+
+# --- 8. PORTALS & FINISH ---
+echo "🔗 Opening Portals..."
+ln -sfn "$GOINFRE/nvim_data" "$HOME/.local/share/nvim"
+ln -sfn "$GOINFRE/nvim_state" "$HOME/.local/state/nvim"
+ln -sfn "$GOINFRE/vscode_data" "$HOME/.vscode/extensions"
 
 
-# --- 6. HOUSEKEEPING ---
-rm -rf "$HOME/.local/lib/python3.10/site-packages/pydantic" 2>/dev/null
+
+# anime cli
+pip install ani-cli-arabic
+# mpv dependencie for ani-cli-arabic ##############################################
+# 1. Clean up old failed attempts
+rm -f /goinfre/$USER/apps/mpv
+
+# 2. Automatically find and download the latest x86_64 AppImage from pkgforge-dev
+# (This repo is more active and consistent than the others)
+LATEST_URL=$(curl -s https://api.github.com/repos/pkgforge-dev/mpv-AppImage/releases/latest | grep "browser_download_url.*x86_64.AppImage" | head -n 1 | cut -d '"' -f 4)
+
+echo "Downloading from: $LATEST_URL"
+curl -Lf "$LATEST_URL" -o /goinfre/$USER/apps/mpv
+
+# 3. Set permissions and link
+chmod +x /goinfre/$USER/apps/mpv
+mkdir -p ~/.local/bin
+ln -sfn /goinfre/$USER/apps/mpv ~/.local/bin/mpv
+
+# ffmpeg (The video processor - necessary for ani-skip)
+# Using the specific latest release build link
+curl -Lf https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -o /goinfre/$USER/apps/ffmpeg.tar.xz
+mkdir -p /goinfre/$USER/apps/ff_tmp
+tar -xJf /goinfre/$USER/apps/ffmpeg.tar.xz -C /goinfre/$USER/apps/ff_tmp --strip-components=1
+cp /goinfre/$USER/apps/ff_tmp/ffmpeg /goinfre/$USER/apps/ff_tmp/ffprobe ~/.local/bin/
+chmod +x ~/.local/bin/ffmpeg ~/.local/bin/ffprobe
+rm -rf /goinfre/$USER/apps/ff_tmp /goinfre/$USER/apps/ffmpeg.tar.xz
+############################################################
+
 hash -r
-
 echo "✅ GOINFRE READY. Ready to Rice."
