@@ -60,6 +60,7 @@ alias cls='clear'
 alias py='clear; echo "----------------------------------------------------------------------------------"; python3'
 # Faster Gemini Chat
 alias gc="gemini -i 'Hello!'"
+alias ai='codex'
 
 
 # Quick Code Explainer (just copy code then run 'ge')
@@ -67,8 +68,7 @@ alias ge="pbpaste | gemini -i 'Explain this code:'"
 
 
 alias cc='gcc'
-alias ai='opencode'
-alias aii='nollama'
+alias aiopen='opencode'
 # ---------------------------
 # Shell integrations
 eval "$(fzf --zsh)"
@@ -156,5 +156,7 @@ precmd() {
 xrdb -merge ~/school-config/.Xresources
 
 # change kitty each time open new session
-#~/./school-config/change_kitty_themes.sh
+# ~/./school-config/change_kitty_themes.sh
+alias clr='clear'
 
+alias maze_pull='git pull upstream main'
