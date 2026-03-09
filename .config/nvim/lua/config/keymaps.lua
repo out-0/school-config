@@ -14,14 +14,9 @@ map("n", "<leader>Y", [["+Y]], { desc = "Copy Line to System Clipboard" })
 local status_ok, harpoon = pcall(require, "harpoon")
 if status_ok then
     -- Basic Navigation
+    map("n", "<leader>ht", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon: Menu" })
     map("n", "<leader>ha", function() harpoon:list():add() end, { desc = "Harpoon: Add File" })
-    map("n", "<leader>h", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, { desc = "Harpoon: Menu" })
     
-    -- Quick Select (Leader + 1, 2, 3, 4)
-    --map("n", "<leader>1", function() harpoon:list():select(1) end, { desc = "Harpoon: File 1" })
-    --map("n", "<leader>2", function() harpoon:list():select(2) end, { desc = "Harpoon: File 2" })
-    --map("n", "<leader>3", function() harpoon:list():select(3) end, { desc = "Harpoon: File 3" })
-    --map("n", "<leader>4", function() harpoon:list():select(4) end, { desc = "Harpoon: File 4" })
 end
 
 -- 4. Python/Ruff Format
