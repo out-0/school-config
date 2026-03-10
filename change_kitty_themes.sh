@@ -23,25 +23,15 @@ if [ -f "$THEME_FILE" ]; then
 		"Pastel Cyberpunk")
             WALLPAPER="Pastel_Cyberpunk.png"
 			;;
-        "Sakura Night")
-            WALLPAPER="Sakura_Night.jpg"
-            ;;
         "Duotone Dark")
             WALLPAPER="Duotone_Dark.jpg"
 			;;
-        "1984 Dark")
-            WALLPAPER="shinobo.png"
-            ;;
-        "shadotheme")
-            WALLPAPER="shadotheme.png"
-            ;;
         "Tropical Neon")
             WALLPAPER="Tropical_Neon.jpg"
             ;;
         "Jackie Brown")
             WALLPAPER="Jackie_Brown.jpeg"
             ;;
-
         *)
             # Default wallpaper if theme isn't specifically mapped
             WALLPAPER="c2.jpeg"
