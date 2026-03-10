@@ -9,6 +9,17 @@ export CARGO_HOME="/goinfre/$USER/cargo"
 export PATH="$CARGO_HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
+fastfetch
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+
+
 # Run init_goinfre ONLY if it hasn't run since we logged in
 if [ ! -f "/tmp/goinfre_ready_$USER" ]; then
     if [ -f "$HOME/init_goinfre.sh" ]; then
@@ -63,9 +74,6 @@ alias gc="gemini -i 'Hello!'"
 alias ai='codex'
 
 
-# Quick Code Explainer (just copy code then run 'ge')
-alias ge="pbpaste | gemini -i 'Explain this code:'"
-
 
 alias cc='gcc'
 alias aiopen='opencode'
@@ -73,7 +81,7 @@ alias aiopen='opencode'
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
-eval "$(starship init zsh)"
+#eval "$(starship init zsh)"
 
 # >>> conda initialize >>>
 # This is the ONLY block you need for Conda
@@ -90,10 +98,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# Start Fastfetch automatically
-if command -v fastfetch &> /dev/null; then
-    fastfetch
-fi
 
 #----------------------------------------------------------------------------------------
 #Open your terminal and type: 
@@ -140,23 +144,55 @@ function glass() {
 
 # Make the browser transparent each time u open terminal or touch ur prompt.
 precmd() {
-    # We wrap the whole thing in () to run it in a subshell
-    # Then we use &! to background it without job notifications
+  # Only run if we are on X11 (or XWayland)
+  if [[ "$XDG_SESSION_TYPE" == "x11" ]]; then
     (
-        local ids=$(xwininfo -root -tree | grep -i "librewolf" | grep -o "0x[0-9a-f]\+")
-        if [[ -n "$ids" ]]; then
-            echo "$ids" | while read -r id; do
-                xprop -id "$id" -format _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY 0xF0000000 2>/dev/null
-                #xprop -id "$id" -format _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY 0xFFFFFFFF 2>/dev/null
-            done
-        fi
+      local ids=$(xwininfo -root -tree | grep -i "Firefox" | grep -oE "0x[0-9a-f]{7,8}")
+      for id in ${=ids}; do
+        # Use your favorite hex here
+        xprop -id "$id" -f _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY 0xDFFFFFFF 2>/dev/null
+      done
     ) &!
+  fi
 }
 
+# Set lock Wallpaper.
 xrdb -merge ~/school-config/.Xresources
 
-# change kitty each time open new session
-# ~/./school-config/change_kitty_themes.sh
 alias clr='clear'
 
-alias maze_pull='git pull upstream main'
+alias cclean='bash ~/LinuxCleaner_42.sh'
+alias anime='ani-cli-arabic'
+
+
+source ~/powerlevel10k/powerlevel10k.zsh-theme >> /dev/null
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+alias scr100='xrandr --output DP-2 --brightness 1'
+alias scr200='xrandr --output DP-2 --brightness 2'
+alias scr150='xrandr --output DP-2 --brightness 1.5'
+
+alias showlib='ldd'
+
+
+# 1. Define the list as an ARRAY
+MY_WALLPAPER_PATHS=(
+    "/goinfre/$USER/Wallpapers"
+    "/home/$USER/Pictures/Wallpapers"
+)
+
+# 2. Use "${MY_WALLPAPER_PATHS[@]}" to expand them correctly
+#IMG=$(find "${MY_WALLPAPER_PATHS[@]}" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) | shuf -n 1)
+
+# 3. Apply the wallpaper
+#gsettings set org.gnome.desktop.background picture-uri "file://$IMG"
+#gsettings set org.gnome.desktop.background picture-uri-dark "file://$IMG"
+
+alias wall='PATHS=("/goinfre/$USER/Wallpapers" "~/Pictures/Wallpapers"); IMG=$(find "${PATHS[@]}" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) | shuf -n 1) && gsettings set org.gnome.desktop.background picture-uri "file://$IMG" && gsettings set org.gnome.desktop.background picture-uri-dark "file://$IMG" && echo "🖼️  New look: $(basename $IMG)"'
+
+# change kitty each time open new session
+sh ~/school-config/change_kitty_themes.sh
+
+alias maxthreads=cat /proc/sys/kernel/threads-max
