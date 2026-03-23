@@ -6,6 +6,10 @@ GOINFRE="/goinfre/$USER"
 MY_APPS="$GOINFRE/apps"
 LOCAL_BIN="$HOME/.local/bin"
 
+export GOINFRE="/goinfre/$USER"
+export CARGO_HOME="$GOINFRE/cargo_home"
+export PATH="$CARGO_HOME/bin:$PATH"
+
 mkdir -p "$GOINFRE" "$MY_APPS" "$LOCAL_BIN" "$GOINFRE/vscode_data"
 
 echo "🚀 Starting Ultimate Goinfre Setup..."
@@ -26,7 +30,17 @@ if ! command -v node &> /dev/null || [[ $(node -v) != v20* ]]; then
     conda install -y -c conda-forge nodejs=20 python=3.11 --quiet
 fi
 
-# --- 3. VS CODE ---
+# --- 3. NEOVIM (Robust Download) ---
+# If file doesn't exist OR is smaller than 1MB (fake error page), download it.
+if [ ! -s "$MY_APPS/nvim" ] || [ $(stat -c%s "$MY_APPS/nvim") -lt 1000000 ]; then
+    echo "🌙 Downloading real Neovim AppImage..."
+    rm -f "$MY_APPS/nvim"
+    curl -L "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.appimage" -o "$MY_APPS/nvim"
+    chmod +x "$MY_APPS/nvim"
+fi
+ln -sfn "$MY_APPS/nvim" "$LOCAL_BIN/nvim"
+
+# --- 4. VS CODE ---
 if [ ! -f "$MY_APPS/vscode/bin/code" ]; then
     echo "📦 Downloading VS Code..."
     curl -L "https://code.visualstudio.com/sha/download?build=stable&os=linux-x64" -o "$GOINFRE/vscode.tar.gz"
@@ -36,14 +50,19 @@ if [ ! -f "$MY_APPS/vscode/bin/code" ]; then
 fi
 ln -sf "$MY_APPS/vscode/bin/code" "$LOCAL_BIN/code"
 
-# --- 4. ALACRITTY (Binary instead of Compile) ---
-if [ ! -f "$LOCAL_BIN/alacritty" ]; then
-    echo "🖥️ Fetching Alacritty Binary..."
-    curl -L "https://github.com/raymond-design/alacritty-bin/raw/main/alacritty_linux_x86_64" -o "$LOCAL_BIN/alacritty"
-    chmod +x "$LOCAL_BIN/alacritty"
+# --- 5. ALACRITTY (Source Build for Firewall Bypass) ---
+if ! command -v alacritty &> /dev/null; then
+    echo "🏗️ Building Alacritty from source..."
+    conda install -y -c conda-forge rust --quiet
+    
+    export CARGO_HOME="$GOINFRE/cargo_home"
+    mkdir -p "$CARGO_HOME"
+    
+    cargo install alacritty
+    ln -sfn "$CARGO_HOME/bin/alacritty" "$LOCAL_BIN/alacritty"
 fi
 
-# --- 5. MPV & FFMPEG & YT-DLP ---
+# --- 6. MPV & FFMPEG ---
 if [ ! -f "$MY_APPS/mpv" ]; then
     echo "🎬 Installing MPV..."
     LATEST_MPV=$(curl -s https://api.github.com/repos/pkgforge-dev/mpv-AppImage/releases/latest | grep "browser_download_url.*x86_64.AppImage" | head -n 1 | cut -d '"' -f 4)
@@ -62,54 +81,28 @@ if [ ! -f "$LOCAL_BIN/ffmpeg" ]; then
     rm -rf "$MY_APPS/ff_tmp" "$MY_APPS/ffmpeg.tar.xz"
 fi
 
-# --- 6. NPM TOOLS ---
+# --- 7. NPM TOOLS ---
 echo "🛠️ Installing Gemini & OpenCode..."
 mkdir -p "$MY_APPS/npm-global"
 npm config set prefix "$MY_APPS/npm-global"
 export PATH="$MY_APPS/npm-global/bin:$PATH"
 [ ! -f "$MY_APPS/npm-global/bin/gemini" ] && npm install -g @google/gemini-cli --quiet
 [ ! -f "$MY_APPS/npm-global/bin/opencode" ] && npm install -g opencode-ai --quiet
-[ ! -f "$MY_APPS/npm-global/bin/codex" ] && npm install -g @openai/codex --quiet
 
-# --- 7. WALLPAPERS (The 'Whole Manga' Scraper) ---
-TARGET="$GOINFRE/Wallpapers/manga"
-if [ ! -d "$TARGET" ] || [ -z "$(ls -A "$TARGET")" ]; then
-    echo "🏮 Scraping the entire Manga folder (Please wait, this is big)..."
-    mkdir -p "$TARGET"
-
-    # 1. Get the list of filenames from GitHub API
-    # 2. Filter for only image files
-    # 3. Download each one
-    curl -s "https://api.github.com/repos/dharmx/walls/contents/manga" | \
-    grep -oP '"name": "\K[^"]+' | \
-    while read -r filename; do
-        if [[ "$filename" == *.jpg || "$filename" == *.jpeg || "$filename" == *.png ]]; then
-            echo "📥 Downloading: $filename"
-            curl -Lf "https://raw.githubusercontent.com/dharmx/walls/main/manga/$filename" \
-                 -o "$TARGET/$filename" --silent --show-error
-        fi
-    done
-
-    # Grab the specific ones from other folders too
-    echo "📥 Fetching extras (m-26 and Stalenhag)..."
-    curl -Lf "https://raw.githubusercontent.com/dharmx/walls/main/minimalist/m-26.jpg" -o "$GOINFRE/Wallpapers/m-26.jpg" --silent
-    echo "✅ Manga folder is fully synced at $TARGET"
-fi
-
-# Optional: Grab the Stalenhag collection too
-STAL_DIR="$GOINFRE/Wallpapers/stalenhag"
-mkdir -p "$STAL_DIR"
-curl -s "https://api.github.com/repos/dharmx/walls/contents/stalenhag" | \
-grep -oP '"name": "\K[^"]+' | while read -r f; do
-    curl -Lf "https://raw.githubusercontent.com/dharmx/walls/main/stalenhag/$f" -o "$STAL_DIR/$f" --silent
-done
-
-# --- 8. FINAL SYMLINKS ---
+# --- 8. FINAL SYMLINKS (The Quota Savers) ---
 echo "🔗 Finalizing Portals..."
-mkdir -p "$GOINFRE/nvim_data" "$GOINFRE/nvim_state"
-ln -sfn "$GOINFRE/nvim_data" "$HOME/.local/share/nvim"
+
+# Neovim: Link Share (plugins), State (history), and Cache (treesitter/swap)
+mkdir -p "$GOINFRE/nvim_share" "$GOINFRE/nvim_state" "$GOINFRE/nvim_cache"
+rm -rf "$HOME/.local/share/nvim" "$HOME/.local/state/nvim" "$HOME/.cache/nvim"
+ln -sfn "$GOINFRE/nvim_share" "$HOME/.local/share/nvim"
 ln -sfn "$GOINFRE/nvim_state" "$HOME/.local/state/nvim"
-ln -sfn "$GOINFRE/vscode_data" "$HOME/.vscode/extensions"
+ln -sfn "$GOINFRE/nvim_cache" "$HOME/.cache/nvim"
+
+# VS Code Extensions
+# Linking the extensions to goinfre also
+#rm -rf "$HOME/.vscode/extensions"
+#ln -sfn "$GOINFRE/vscode_data" "$HOME/.vscode/extensions"
 
 hash -r
-echo "✅ GOINFRE READY. Ready to Rice."
+echo "✅ GOINFRE READY. Neovim and VSCode linked to Goinfre."
