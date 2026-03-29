@@ -17,7 +17,7 @@
         "scope": "comment",
         "settings": {
           "fontStyle": "italic bold",
-          "foreground": "#80c35cee",
+          "foreground": "#8ca9a8ee",
         },
       },
     ],
@@ -48,6 +48,7 @@
   "breadcrumbs.enabled": false,
   "workbench.statusBar.visible": false,
   "workbench.startupEditor": "none",
+  "window.restoreWindows": "all",
   "workbench.editor.showTabs": "single",
   "workbench.sideBar.location": "right",
   "workbench.iconTheme": "material-icon-theme",
@@ -60,7 +61,7 @@
   "explorer.confirmDelete": true,
   "explorer.decorations.badges": false, // highlight error files with dot
   "git.decorations.enabled": false, // highlight git changes file
-  "window.zoomLevel": 3, // Ui elements zoom
+  "window.zoomLevel": 1, // Ui elements zoom
   "editor.multiCursorModifier": "ctrlCmd",
   // cursor shit
   "editor.cursorBlinking": "solid",
@@ -96,7 +97,6 @@
   // if you opt for tabs :)
   "window.density.editorTabHeight": "compact",
   "window.menuBarVisibility": "compact",
-  "window.restoreWindows": "none",
   // vscodevim settings
   "vim.useSystemClipboard": true,
   "vim.hlsearch": true,
@@ -126,4 +126,8 @@
   "workbench.layoutControl.enabled": false,
   "workbench.navigationControl.enabled": false,
   "chat.agentsControl.enabled": false,
+  "window.commandCenter": false,
+  "python.analysis.typeCheckingMode": "standard",
+  "workbench.editor.enablePreview": false,
+  "chat.viewSessions.orientation": "stacked",
 }

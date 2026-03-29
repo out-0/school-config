@@ -291,5 +291,27 @@
         "workbench.action.toggleMaximizeEditorGroup"
       ]
     }
-  }
+  },
+  {
+      "key": "space r",
+      "command": "runCommands",
+      "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus)",
+      "args": {
+        "commands": [
+          "workbench.action.toggleAuxiliaryBar",
+          "workbench.action.toggleMaximizedAuxiliaryBar"
+        ]
+      }
+    },
+    {
+      "key": "escape",
+      "command": "runCommands",
+      "when": "auxiliaryBarMaximized",
+      "args": {
+        "commands": [
+          "workbench.action.toggleMaximizedAuxiliaryBar",
+          "workbench.action.toggleAuxiliaryBar",
+        ]
+      }
+    }
 ]
