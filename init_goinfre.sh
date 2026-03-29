@@ -120,6 +120,8 @@ EXTENSIONS=(
 	"DaltonMenezes.aura-theme"
 	"openai.chatgpt"
 	"GitHub.copilot-chat"
+	"JoseMurilloc.aura-spirit-dracula"
+	"esbenp.prettier-vscode"
 )
 
 echo "🧩 Syncing VS Code Extensions (Silent Mode)..."
