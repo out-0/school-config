@@ -110,6 +110,16 @@ EXTENSIONS=(
     "pkief.material-icon-theme"
     "njpwerner.autodocstring"
     "vscodevim.vim"
+	"eamodio.gitlens"
+	"KevinRose.vsc-python-indent"
+	"tushortz.python-extended-snippets"
+	"xirider.livecode"
+	"GitHub.github-vscode-theme"
+	"BeardedBear.beardedtheme"
+	"jdinhlife.gruvbox"
+	"DaltonMenezes.aura-theme"
+	"openai.chatgpt"
+	"GitHub.copilot-chat"
 )
 
 echo "🧩 Syncing VS Code Extensions (Silent Mode)..."
