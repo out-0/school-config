@@ -102,48 +102,48 @@ ln -sfn "$GOINFRE/nvim_share" "$HOME/.local/share/nvim"
 ln -sfn "$GOINFRE/nvim_state" "$HOME/.local/state/nvim"
 ln -sfn "$GOINFRE/nvim_cache" "$HOME/.cache/nvim"
 
-# --- 8. AUTO-EXTENSION INSTALLER (The "No-Binary" Final Fix) ---
+# --- 8. AUTO-EXTENSION INSTALLER (The "Official Name" Fix) ---
 EXTENSIONS=(
     "ms-python.python"
     "ms-python.vscode-pylance"
-    "asvetliakov.vscode-neovim"
     "christian-kohler.path-intellisense"
     "pkief.material-icon-theme"
     "njpwerner.autodocstring"
+    "vscodevim.vim"
 )
 
-echo "🧩 Syncing VS Code Extensions (Silent)..."
+echo "🧩 Syncing VS Code Extensions (Silent Mode)..."
 EXT_DIR="$GOINFRE/vscode-exts"
 mkdir -p "$EXT_DIR"
 
 for ext in "${EXTENSIONS[@]}"; do
-    # Check if a folder for this extension already exists in Goinfre
+    # 1. Check if ANY folder starting with the extension name exists
     if ! ls "$EXT_DIR" 2>/dev/null | grep -iq "^${ext}"; then
         echo "📥 Downloading $ext..."
         
         PUB=$(echo "$ext" | cut -d. -f1)
         NAME=$(echo "$ext" | cut -d. -f2)
         
-        # We use a more 'honest' Marketplace URL that doesn't trigger as many blocks
         VSIX_URL="https://${PUB}.gallery.vsassets.io/_apis/public/gallery/publisher/${PUB}/extension/${NAME}/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
-        
         VSIX_FILE="/tmp/${ext}.vsix"
         TMP_EXTRACT="/tmp/${ext}_tmp"
 
-        # Download silently (-s) but follow redirects (-L)
         curl -L "$VSIX_URL" -o "$VSIX_FILE" -s -A "Mozilla/5.0"
 
-        # Extract
         mkdir -p "$TMP_EXTRACT"
-        # We use 'unzip' but ignore the 'warning' about extra bytes at start of file
         unzip -q "$VSIX_FILE" -d "$TMP_EXTRACT" 2>/dev/null || true
         
         if [ -d "$TMP_EXTRACT/extension" ]; then
-            # Move the actual extension files to your Goinfre folder
-            mv "$TMP_EXTRACT/extension" "$EXT_DIR/${ext}-manual"
-            echo "✅ $ext installed."
+            # 2. GET REAL VERSION: This is the magic part
+            # It looks into the package.json to find the version (e.g., 1.2.3)
+            VERSION=$(grep -oP '"version":\s*"\K[^"]+' "$TMP_EXTRACT/extension/package.json" || echo "manual")
+            REAL_NAME="${ext}-${VERSION}"
+            
+            # 3. MOVE TO GOINFRE with the official naming convention
+            mv "$TMP_EXTRACT/extension" "$EXT_DIR/$REAL_NAME"
+            echo "✅ $ext ($VERSION) installed."
         else
-            echo "❌ Failed to extract $ext. (Marketplace link might be dead for this version)."
+            echo "❌ Failed to extract $ext."
         fi
         
         rm -rf "$VSIX_FILE" "$TMP_EXTRACT"
