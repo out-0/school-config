@@ -118,10 +118,11 @@ EXTENSIONS=(
 	"BeardedBear.beardedtheme"
 	"jdinhlife.gruvbox"
 	"DaltonMenezes.aura-theme"
-	"openai.chatgpt"
+	# "openai.chatgpt"
 	"GitHub.copilot-chat"
 	"JoseMurilloc.aura-spirit-dracula"
 	"esbenp.prettier-vscode"
+	"aaron-bond.better-comments"
 )
 
 echo "🧩 Syncing VS Code Extensions (Silent Mode)..."
@@ -132,10 +133,10 @@ for ext in "${EXTENSIONS[@]}"; do
     # 1. Check if ANY folder starting with the extension name exists
     if ! ls "$EXT_DIR" 2>/dev/null | grep -iq "^${ext}"; then
         echo "📥 Downloading $ext..."
-        
+
         PUB=$(echo "$ext" | cut -d. -f1)
         NAME=$(echo "$ext" | cut -d. -f2)
-        
+
         VSIX_URL="https://${PUB}.gallery.vsassets.io/_apis/public/gallery/publisher/${PUB}/extension/${NAME}/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
         VSIX_FILE="/tmp/${ext}.vsix"
         TMP_EXTRACT="/tmp/${ext}_tmp"
@@ -144,20 +145,20 @@ for ext in "${EXTENSIONS[@]}"; do
 
         mkdir -p "$TMP_EXTRACT"
         unzip -q "$VSIX_FILE" -d "$TMP_EXTRACT" 2>/dev/null || true
-        
+
         if [ -d "$TMP_EXTRACT/extension" ]; then
             # 2. GET REAL VERSION: This is the magic part
             # It looks into the package.json to find the version (e.g., 1.2.3)
             VERSION=$(grep -oP '"version":\s*"\K[^"]+' "$TMP_EXTRACT/extension/package.json" || echo "manual")
             REAL_NAME="${ext}-${VERSION}"
-            
+
             # 3. MOVE TO GOINFRE with the official naming convention
             mv "$TMP_EXTRACT/extension" "$EXT_DIR/$REAL_NAME"
             echo "✅ $ext ($VERSION) installed."
         else
             echo "❌ Failed to extract $ext."
         fi
-        
+
         rm -rf "$VSIX_FILE" "$TMP_EXTRACT"
     else
         echo "✅ $ext is already present."
