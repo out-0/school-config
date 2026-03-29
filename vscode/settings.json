@@ -1,0 +1,129 @@
+{
+  // appearance
+  "editor.fontFamily": "Dank Mono",
+  "editor.fontSize": 14,
+  "editor.fontLigatures": true, //-> =>
+  "editor.lineHeight": 2.5, // line cursor size
+  "workbench.activityBar.compact": true,
+  "workbench.activityBar.location": "hidden",
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "hidden",
+  "editor.overviewRulerBorder": false,
+  "editor.hideCursorInOverviewRuler": true,
+  // Customize comments
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "comment",
+        "settings": {
+          "fontStyle": "italic bold",
+          "foreground": "#80c35cee",
+        },
+      },
+    ],
+  },
+  "editor.stickyScroll.enabled": false, // Fix scholling
+  "editor.colorDecorators": true, // show collor next to hex
+  "editor.codeLens": false,
+  "editor.links": false, // make links dynamic
+  "editor.matchBrackets": "always",
+  "editor.parameterHints.enabled": true,
+  "editor.lightbulb.enabled": "off", // hide list of actions
+  "editor.hover.enabled": "on",
+  "files.trimTrailingWhitespace": true, // Automatically remove whitespaces on save
+  "files.insertFinalNewline": false,
+  "scm.diffDecorations": "none",
+  "editor.lineNumbers": "relative",
+  //"editor.tabSize": 4,
+  //"editor.detectIndentation": true,
+  "editor.showFoldingControls": "mouseover", // show arrows to mimize a block of code
+  "editor.guides.indentation": false,
+  "editor.renderWhitespace": "none",
+  "editor.renderLineHighlight": "none",
+  "editor.occurrencesHighlight": "singleFile", // Highlight same words
+  "editor.selectionHighlight": false,
+
+  "editor.minimap.enabled": false,
+  "workbench.tips.enabled": false,
+  "breadcrumbs.enabled": false,
+  "workbench.statusBar.visible": false,
+  "workbench.startupEditor": "none",
+  "workbench.editor.showTabs": "single",
+  "workbench.sideBar.location": "right",
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.hidesExplorerArrows": true,
+  "workbench.tree.enableStickyScroll": false,
+  "workbench.tree.renderIndentGuides": "none",
+  "workbench.tree.indent": 16,
+  "explorer.compactFolders": false,
+  "explorer.confirmDragAndDrop": true,
+  "explorer.confirmDelete": true,
+  "explorer.decorations.badges": false, // highlight error files with dot
+  "git.decorations.enabled": false, // highlight git changes file
+  "window.zoomLevel": 3, // Ui elements zoom
+  "editor.multiCursorModifier": "ctrlCmd",
+  // cursor shit
+  "editor.cursorBlinking": "solid",
+  "editor.cursorStyle": "block",
+  "workbench.colorCustomizations": {
+    "editorCursor.background": "#000000",
+    //"editorOverviewRuler.wordHighlightStrongForeground": "#0000",
+    //"editorOverviewRuler.selectionHighlightForeground": "#0000",
+    //"editorOverviewRuler.rangeHighlightForeground": "#0000",
+    //"editorOverviewRuler.wordHighlightForeground": "#0000",
+    //"editorOverviewRuler.bracketMatchForeground": "#0000",
+    //"editorOverviewRuler.findMatchForeground": "#0000",
+    //"editorOverviewRuler.modifiedForeground": "#0000",
+    //"editorOverviewRuler.deletedForeground": "#0000",
+    //"editorOverviewRuler.warningForeground": "#0000",
+    //"editorOverviewRuler.addedForeground": "#0000",
+    //"editorOverviewRuler.errorForeground": "#0000",
+    //"editorOverviewRuler.infoForeground": "#0000",
+    //"editorOverviewRuler.border": "#0000",
+    "[Aura Dracula Spirit (Soft)]": {
+      "editorSuggestWidget.selectedBackground": "#3A334B",
+      "sideBar.background": "#191521",
+    },
+  },
+  //"editor.quickSuggestions": {
+  //    "other": "on",
+  //},
+  //"editor.suggestOnTriggerCharacters": true, // suggestion after dot (.)
+  "editor.tabCompletion": "on",
+  "editor.snippetSuggestions": "top",
+  "emmet.triggerExpansionOnTab": true, // handy-for html
+
+  // if you opt for tabs :)
+  "window.density.editorTabHeight": "compact",
+  "window.menuBarVisibility": "compact",
+  "window.restoreWindows": "none",
+  // vscodevim settings
+  "vim.useSystemClipboard": true,
+  "vim.hlsearch": true,
+  "vim.useCtrlKeys": true,
+  // vscodevim appearance settings
+  "editor.cursorSurroundingLines": 10,
+  "vim.smartRelativeLine": true,
+  // highlighted yank
+  "vim.highlightedyank.enable": true,
+  "vim.highlightedyank.color": "rgba(250, 189, 47, 0.5)",
+  "vim.highlightedyank.textColor": "#202020",
+  "vim.highlightedyank.duration": 150,
+  // statusbar colors
+  "vim.statusBarColorControl": false,
+  "vim.statusBarColors.normal": ["#171819", "#ffffff"],
+  "vim.statusBarColors.insert": ["#2C2E07", "#ffffff"],
+  "vim.statusBarColors.visual": ["#35151D", "#ffffff"],
+  "vim.statusBarColors.visualline": ["#35151D", "#ffffff"],
+  "vim.statusBarColors.visualblock": ["#35151D", "#ffffff"],
+  "vim.statusBarColors.commandlineinprogress": ["#2C2206", "#ffffff"],
+  "vim.statusBarColors.searchinprogressmode": ["#171819", "#ffffff"],
+  "vim.statusBarColors.surroundinputmode": ["#171819", "#ffffff"],
+  "workbench.colorTheme": "Aura Dracula Spirit (Soft)",
+  "files.autoSave": "afterDelay",
+  "update.mode": "none",
+  "extensions.ignoreRecommendations": true,
+  "workbench.layoutControl.enabled": false,
+  "workbench.navigationControl.enabled": false,
+  "chat.agentsControl.enabled": false,
+}
