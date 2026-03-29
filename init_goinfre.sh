@@ -102,23 +102,57 @@ ln -sfn "$GOINFRE/nvim_share" "$HOME/.local/share/nvim"
 ln -sfn "$GOINFRE/nvim_state" "$HOME/.local/state/nvim"
 ln -sfn "$GOINFRE/nvim_cache" "$HOME/.cache/nvim"
 
-# --- 8. AUTO-EXTENSION INSTALLER ---
+# --- 8. AUTO-EXTENSION INSTALLER (The "No-Binary" Final Fix) ---
 EXTENSIONS=(
     "ms-python.python"
     "ms-python.vscode-pylance"
     "asvetliakov.vscode-neovim"
     "christian-kohler.path-intellisense"
     "pkief.material-icon-theme"
+    "njpwerner.autodocstring"
 )
 
-echo "🧩 Syncing VS Code Extensions..."
+echo "🧩 Syncing VS Code Extensions (Silent)..."
+EXT_DIR="$GOINFRE/vscode-exts"
+mkdir -p "$EXT_DIR"
+
 for ext in "${EXTENSIONS[@]}"; do
-    if ! ls "$GOINFRE/vscode-exts" | grep -iq "${ext}"; then
-        echo "📥 Installing $ext..."
-        # Launching in background to keep the script moving
-        "$LOCAL_BIN/code" --install-extension "$ext" --force &>/dev/null &
+    # Check if a folder for this extension already exists in Goinfre
+    if ! ls "$EXT_DIR" 2>/dev/null | grep -iq "^${ext}"; then
+        echo "📥 Downloading $ext..."
+        
+        PUB=$(echo "$ext" | cut -d. -f1)
+        NAME=$(echo "$ext" | cut -d. -f2)
+        
+        # We use a more 'honest' Marketplace URL that doesn't trigger as many blocks
+        VSIX_URL="https://${PUB}.gallery.vsassets.io/_apis/public/gallery/publisher/${PUB}/extension/${NAME}/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage"
+        
+        VSIX_FILE="/tmp/${ext}.vsix"
+        TMP_EXTRACT="/tmp/${ext}_tmp"
+
+        # Download silently (-s) but follow redirects (-L)
+        curl -L "$VSIX_URL" -o "$VSIX_FILE" -s -A "Mozilla/5.0"
+
+        # Extract
+        mkdir -p "$TMP_EXTRACT"
+        # We use 'unzip' but ignore the 'warning' about extra bytes at start of file
+        unzip -q "$VSIX_FILE" -d "$TMP_EXTRACT" 2>/dev/null || true
+        
+        if [ -d "$TMP_EXTRACT/extension" ]; then
+            # Move the actual extension files to your Goinfre folder
+            mv "$TMP_EXTRACT/extension" "$EXT_DIR/${ext}-manual"
+            echo "✅ $ext installed."
+        else
+            echo "❌ Failed to extract $ext. (Marketplace link might be dead for this version)."
+        fi
+        
+        rm -rf "$VSIX_FILE" "$TMP_EXTRACT"
+    else
+        echo "✅ $ext is already present."
     fi
 done
+
+echo "✨ Extensions check complete."
 
 # Sync settings from your dotfiles repository
 if [ -d "$HOME/school-config/vscode" ]; then
