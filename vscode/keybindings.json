@@ -45,7 +45,7 @@
   {
     "key": "space ,",
     "command": "workbench.action.showAllEditors",
-    "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus)"
+    "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus) && !auxiliaryBarMaximized"
   },
   {
     "key": "space e",
@@ -56,7 +56,7 @@
         "workbench.files.action.focusFilesExplorer"
       ]
     },
-    "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus) && !sideBarFocus"
+    "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus) && !sideBarFocus && !auxiliaryBarMaximized"
   },
   {
     "key": "space e",
@@ -313,5 +313,16 @@
           "workbench.action.toggleAuxiliaryBar",
         ]
       }
+    },
+    // Find it faster extension
+    {
+      "key": "f f",
+      "command": "find-it-faster.findFiles",
+      "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus) && !auxiliaryBarMaximized"
+    },
+    {
+      "key": "f w",
+      "command": "find-it-faster.findWithinFiles",
+      "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus) && !auxiliaryBarMaximized"
     }
 ]

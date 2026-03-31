@@ -1,11 +1,11 @@
 {
   // appearance
-  "editor.fontFamily": "Dank Mono",
+  "editor.fontFamily": "DankMono Nerd Font",
   "editor.fontSize": 14,
   "editor.fontLigatures": true, //-> =>
-  "editor.lineHeight": 2.5, // line cursor size
+  "editor.lineHeight": 1.0, // line cursor size
   "workbench.activityBar.compact": true,
-  "workbench.activityBar.location": "hidden",
+  "workbench.activityBar.location": "top",
   "editor.scrollbar.horizontal": "hidden",
   "editor.scrollbar.vertical": "hidden",
   "editor.overviewRulerBorder": false,
@@ -34,7 +34,7 @@
   "files.insertFinalNewline": false,
   "scm.diffDecorations": "none",
   "editor.lineNumbers": "relative",
-  //"editor.tabSize": 4,
+  "editor.tabSize": 2,
   //"editor.detectIndentation": true,
   "editor.showFoldingControls": "mouseover", // show arrows to mimize a block of code
   "editor.guides.indentation": false,
@@ -119,7 +119,7 @@
   "vim.statusBarColors.commandlineinprogress": ["#2C2206", "#ffffff"],
   "vim.statusBarColors.searchinprogressmode": ["#171819", "#ffffff"],
   "vim.statusBarColors.surroundinputmode": ["#171819", "#ffffff"],
-  "workbench.colorTheme": "Aura Dracula Spirit (Soft)",
+  "workbench.colorTheme": "Visual Studio Light - C++",
   "files.autoSave": "afterDelay",
   "update.mode": "none",
   "extensions.ignoreRecommendations": true,
@@ -130,4 +130,9 @@
   "python.analysis.typeCheckingMode": "standard",
   "workbench.editor.enablePreview": false,
   "chat.viewSessions.orientation": "stacked",
+  "backgroundCover.imagePath": "/home/out/Pictures/Wallpapers/a_black_and_white_comic_book_page_of_a_man's_face.jpeg",
+  "backgroundCover.randomImageFolder": "/home/out/Pictures/Wallpapers",
+  "background.enabled": true,
+  "find-it-faster.general.shellPathForTerminal": "/usr/bin/zsh",
+  "find-it-faster.general.showMaximizedTerminal": true
 }
