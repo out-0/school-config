@@ -123,6 +123,9 @@ EXTENSIONS=(
 	"JoseMurilloc.aura-spirit-dracula"
 	"esbenp.prettier-vscode"
 	"aaron-bond.better-comments"
+	"tomrijndorp.find-it-faster"
+	"saoudrizwan.claude-dev"
+	"esbenp.prettier-vscode"
 )
 
 echo "🧩 Syncing VS Code Extensions (Silent Mode)..."
