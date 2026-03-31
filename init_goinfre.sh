@@ -91,9 +91,9 @@ mkdir -p "$HOME/.vscode"
 ln -sfn "$GOINFRE/vscode-exts" "$HOME/.vscode/extensions"
 
 # User Data (Settings/Cache): Move from .config to Goinfre
-mkdir -p "$HOME/.config"
-[ -d "$HOME/.config/Code" ] && [ ! -L "$HOME/.config/Code" ] && rm -rf "$HOME/.config/Code"
-ln -sfn "$GOINFRE/vscode-user-data" "$HOME/.config/Code"
+#mkdir -p "$HOME/.config"
+#[ -d "$HOME/.config/Code" ] && [ ! -L "$HOME/.config/Code" ] && rm -rf "$HOME/.config/Code"
+#ln -sfn "$GOINFRE/vscode-user-data" "$HOME/.config/Code"
 
 # Neovim Cache/State: Move to Goinfre
 mkdir -p "$GOINFRE/nvim_share" "$GOINFRE/nvim_state" "$GOINFRE/nvim_cache"
