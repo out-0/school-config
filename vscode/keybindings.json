@@ -42,6 +42,19 @@
       "command": "extension.vim_ctrl+p",
       "when": "editorTextFocus && vim.active && vim.use<C-p> && !inDebugRepl || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'SearchInProgressMode' && !inQuickOpen"
   },
+  // NAVIGATE TROUGH ERRORS:
+  // Go to Next Problem in Files (Error, Warning, Info)
+  {
+    "key": "Alt-n",
+    "command": "editor.action.marker.nextInFiles",
+    "when": "editorFocus"
+  },
+  // Go to Prev Problem in Files (Error, Warning, Info)
+  {
+    "key": "Alt-p",
+    "command": "editor.action.marker.prevInFiles",
+    "when": "editorFocus"
+  },
   {
     "key": "space ,",
     "command": "workbench.action.showAllEditors",

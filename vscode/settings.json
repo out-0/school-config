@@ -3,7 +3,7 @@
   "editor.fontFamily": "DankMono Nerd Font",
   "editor.fontSize": 14,
   "editor.fontLigatures": true, //-> =>
-  "editor.lineHeight": 1.0, // line cursor size
+  "editor.lineHeight": 2.0, // line cursor size
   "workbench.activityBar.compact": true,
   "workbench.activityBar.location": "top",
   "editor.scrollbar.horizontal": "hidden",
@@ -17,7 +17,7 @@
         "scope": "comment",
         "settings": {
           "fontStyle": "italic bold",
-          "foreground": "#8ca9a8ee",
+          "foreground": "#f0fafaee",
         },
       },
     ],
@@ -33,7 +33,7 @@
   "files.trimTrailingWhitespace": true, // Automatically remove whitespaces on save
   "files.insertFinalNewline": false,
   "scm.diffDecorations": "none",
-  "editor.lineNumbers": "relative",
+  "editor.lineNumbers": "off",
   "editor.tabSize": 2,
   //"editor.detectIndentation": true,
   "editor.showFoldingControls": "mouseover", // show arrows to mimize a block of code
@@ -49,7 +49,8 @@
   "workbench.statusBar.visible": false,
   "workbench.startupEditor": "none",
   "window.restoreWindows": "all",
-  "workbench.editor.showTabs": "single",
+  //"workbench.editor.showTabs": "none",
+  "workbench.editor.showTabs": "multiple",
   "workbench.sideBar.location": "right",
   "workbench.iconTheme": "material-icon-theme",
   "material-icon-theme.hidesExplorerArrows": true,
@@ -72,10 +73,10 @@
     //"editorOverviewRuler.selectionHighlightForeground": "#0000",
     //"editorOverviewRuler.rangeHighlightForeground": "#0000",
     //"editorOverviewRuler.wordHighlightForeground": "#0000",
-    //"editorOverviewRuler.bracketMatchForeground": "#0000",
+    "editorOverviewRuler.bracketMatchForeground": "#0000",
     //"editorOverviewRuler.findMatchForeground": "#0000",
-    //"editorOverviewRuler.modifiedForeground": "#0000",
-    //"editorOverviewRuler.deletedForeground": "#0000",
+    "editorOverviewRuler.modifiedForeground": "#0000",
+    "editorOverviewRuler.deletedForeground": "#0000",
     //"editorOverviewRuler.warningForeground": "#0000",
     //"editorOverviewRuler.addedForeground": "#0000",
     //"editorOverviewRuler.errorForeground": "#0000",
@@ -103,7 +104,7 @@
   "vim.useCtrlKeys": true,
   // vscodevim appearance settings
   "editor.cursorSurroundingLines": 10,
-  "vim.smartRelativeLine": true,
+  "vim.smartRelativeLine": false,
   // highlighted yank
   "vim.highlightedyank.enable": true,
   "vim.highlightedyank.color": "rgba(250, 189, 47, 0.5)",
@@ -119,7 +120,7 @@
   "vim.statusBarColors.commandlineinprogress": ["#2C2206", "#ffffff"],
   "vim.statusBarColors.searchinprogressmode": ["#171819", "#ffffff"],
   "vim.statusBarColors.surroundinputmode": ["#171819", "#ffffff"],
-  "workbench.colorTheme": "Visual Studio Light - C++",
+  "workbench.colorTheme": "Gruvbox Dark Hard",
   "files.autoSave": "afterDelay",
   "update.mode": "none",
   "extensions.ignoreRecommendations": true,
@@ -130,9 +131,6 @@
   "python.analysis.typeCheckingMode": "standard",
   "workbench.editor.enablePreview": false,
   "chat.viewSessions.orientation": "stacked",
-  "backgroundCover.imagePath": "/home/out/Pictures/Wallpapers/a_black_and_white_comic_book_page_of_a_man's_face.jpeg",
-  "backgroundCover.randomImageFolder": "/home/out/Pictures/Wallpapers",
-  "background.enabled": true,
   "find-it-faster.general.shellPathForTerminal": "/usr/bin/zsh",
   "find-it-faster.general.showMaximizedTerminal": true
 }
